@@ -1,0 +1,60 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+def deleteSpecificNode(last, key):
+    if last is None:
+        return None
+
+    curr = last.next
+    prev = last
+
+    # If the node to be deleted is the only node in the list
+    if curr == last and curr.data == key:
+        last = None
+        return last
+
+    # If the node to be deleted is the first node
+    if curr.data == key:
+        last.next = curr.next
+        return last
+
+    # Traverse the list to find the node to be deleted
+    while curr != last and curr.data != key:
+        prev = curr
+        curr = curr.next
+
+    # If the node to be deleted is found
+    if curr.data == key:
+        prev.next = curr.next
+        if curr == last:
+            last = prev
+
+    return last
+
+def printList(last):
+    if last is None:
+        return
+
+    head = last.next
+    while True:
+        print(head.data, end="")
+        head = head.next
+        if head == last.next:
+            break
+        print(" <-> ",end="")
+    print()
+
+if __name__ == "__main__":
+    first = Node(2)
+    first.next = Node(3)
+    first.next.next = Node(4)
+
+    last = first.next.next
+    last.next = first
+
+    key = 3
+    last = deleteSpecificNode(last, key)
+
+    printList(last)
